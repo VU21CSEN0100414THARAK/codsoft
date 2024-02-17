@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Basic Calculator</title>
+    <style>
+        body {
+            background-color: gainsboro;
+            margin: 0;
+            padding: 0;
+            background-image: url('bg5.jpg');
+            background-size: cover;
+            filter:saturate(2.54);
+            
+        }
+        
+        h1 {
+            text-align: center;
+            width: auto;
+            text-shadow:blue;
+            font-family:sans-serif;
+            
+        }
+
+        
+        .outer-box {
+            width: 500px;
+            height: 510px;
+            margin-left: 30%;
+            margin-right: 30%;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 4px 8px 0 rgb(136, 0, 255), 0 6px 20px 0 rgb(0, 255, 195);
+            z-index: 1;
+            border-color: #111;
+            
+        }
+        
+        .display {
+            width: 455px;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 8px;
+            offset: inherit;
+        }
+        
+        .buttons button {
+            width: 100px;
+            height: 70px;
+            margin: 10px;
+            font-size: 20px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            border-radius: 12px;
+        }
+        
+        .buttons button:hover {
+            background-color: #45a049;
+            box-shadow: 10px 0px 10px black;
+        }
+        
+        .buttons button:active {
+            background-color: #3e8e41;
+            transform: translateX(10px);
+        }
+        
+        .left {
+            float: right;
+        }
+        
+        .left:hover {
+            width: 150px;
+        }
+    
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index:1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x:hidden;
+            transition: 0.6s;
+            padding-top: 60px;
+        }
+        
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.6s;
+        }
+        
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+        
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        #menu{
+            padding:10px;
+            font-size: 30px;
+        }
+        
+
+    </style>
+</head>
+<body>
+    <span style="cursor:pointer" onclick="openNav()" id="menu">&#9776;</span>
+    <h1>CALCULATOR</h1>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="age.html">AGE</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+    </div>
+    <div class="outer-box">
+        <input type="text" id="display" class="display">
+        <div class="buttons">
+            <button onclick="appendToDisplay('7')"onkeydown="myFunction(event)">7</button>
+            <button onclick="appendToDisplay('8')" onkeydown="myFunction(event)">8</button>
+            <button onclick="appendToDisplay('9')" onkeydown="myFunction(event)">9</button>
+            <button onclick="appendToDisplay('+')" onkeydown="myFunction(event)">+</button>
+            <button onclick="appendToDisplay('4')" onkeydown="myFunction(event)">4</button>
+            <button onclick="appendToDisplay('5')" onkeydown="myFunction(event)">5</button>
+            <button onclick="appendToDisplay('6')" onkeydown="myFunction(event)">6</button>
+            <button onclick="appendToDisplay('*')"onkeydown="myFunction(event)">*</button>
+            <button onclick="appendToDisplay('1')" onkeydown="myFunction(event)">1</button>
+            <button onclick="appendToDisplay('2')" onkeydown="myFunction(event)">2</button>
+            <button onclick="appendToDisplay('3')" onkeydown="myFunction(event)">3</button>
+            <button onclick="appendToDisplay('/')" onkeydown="myFunction(event)">/</button>
+            <button onclick="appendToDisplay('0')" onkeydown="myFunction(event)">0</button>
+            <button onclick="appendToDisplay('.')" onkeydown="myFunction(event)">.</button>
+            <button onclick="clearDisplay()" onkeydown="myFunction(event)">C</button>
+            <button onclick="appendToDisplay('-')" onkeydown="myFunction(event)">-</button>
+            <button onclick="calculate()" class="left" onkeydown="myFunction(event)">=</button>
+        </div>
+    </div>
+    <script>
+    
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        // Close side menu
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+        function appendToDisplay(value) {
+          document.getElementById('display').value += value;
+}
+
+
+function clearDisplay() {
+  document.getElementById('display').value = '';
+}
+
+function calculate() {
+  let expression = document.getElementById('display').value;
+  let result = eval(expression);
+  document.getElementById('display').value = result;
+}
+
+// Listen for keypress events
+document.addEventListener('keydown', function(event) {
+  const key = event.key;
+  const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/', '.', 'Enter', 'Backspace', 'Escape'];
+
+  if (allowedKeys.includes(key)) {
+    if (key == 'Enter') {
+      calculate();
+    } else if (key == 'Backspace') {
+      let currentValue = document.getElementById('display').value;
+      document.getElementById('display').value = currentValue
+    } else if (key == 'Escape') {
+      clearDisplay();
+    } else {
+      appendToDisplay(key);
+    }
+  }
+})
+    </script>
+</body>
+</html>
